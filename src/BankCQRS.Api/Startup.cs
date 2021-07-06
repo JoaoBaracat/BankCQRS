@@ -2,6 +2,7 @@ using BankCQRS.Api.Middleware;
 using BankCQRS.Api.Services;
 using BankCQRS.Application;
 using BankCQRS.Application.Contracts;
+using BankCQRS.Application.Models.Cache;
 using BankCQRS.Infra.Consumer;
 using BankCQRS.Infra.Data;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,9 @@ namespace BankCQRS.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<MemoryCacheSettings>(Configuration.GetSection("MemoryCacheSettings"));
+            services.AddMemoryCache();
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
